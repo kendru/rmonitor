@@ -1,6 +1,5 @@
 (ns rmonitor.server
-  (:require [noir.server :as server]
-            [taoensso.carmine :as car]))
+  (:require [noir.server :as server]))
 
 (server/load-views-ns 'rmonitor.views)
 
