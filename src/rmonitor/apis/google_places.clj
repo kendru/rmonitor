@@ -34,8 +34,8 @@
     (if place-ref
       place-ref
       (let [new-ref (get-in (search-for business) ["results" 0 "reference"])]
-        (model/save-business (assoc business :place-ref new-ref))
-        new-ref))))
+        (do (model/save-business (assoc business :place-ref new-ref))
+        new-ref)))))
 
 (defn details-for [business]
   (let [reference (place-ref-for business)]

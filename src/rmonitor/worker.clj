@@ -6,17 +6,17 @@
 ; Support 50 businesses
 (def all-businesses (m/index-businesses 1 50))
 
-(defn google-reviews []
+(defn review-getter [get-fn]
   (for [biz all-businesses]
-    (let [reviews (map #(assoc % :_business_id (biz :_id)) (goog/get-reviews biz))]
+    (let [reviews (map #(assoc % :_business_id (biz :_id)) (get-fn biz))]
       (doseq [review reviews]
         (m/save-review review)))))
 
+(defn google-reviews []
+  (review-getter goog/get-reviews))
+
 (defn citygrid-reviews []
-  (for [biz all-businesses]
-    (let [reviews (map #(assoc % :_business_id (biz :_id)) (cg/get-reviews biz))]
-      (doseq [review reviews]
-        (m/save-review review)))))
+  (review-getter cg/get-reviews))
 
 (defn -main [& m]
   (do
